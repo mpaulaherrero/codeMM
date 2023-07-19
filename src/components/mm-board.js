@@ -255,7 +255,6 @@ export class MMBoard extends LitElement {
             }
             this.tokens.push(proposedCombinationTokens);
         }
-        //console.log(this.tokens)
     }
 
     set(board){
