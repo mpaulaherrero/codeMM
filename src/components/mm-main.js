@@ -36,7 +36,7 @@ export class MMMain extends LitElement {
                 position: absolute;
                 left: 50%;
                 margin-top: 20px;
-                margin-left: -255px;
+                margin-left: -155px;
                 display: flex;
                 flex-wrap: wrap;
             }
@@ -61,8 +61,8 @@ export class MMMain extends LitElement {
             @media screen and (max-width: 600px) {
                 #container {
                     margin: 0;
-                    top: 50px;
-                    left: 0;
+                    top: 10px;
+                    left: 15%;
                     padding: 0 5px;
                     display: block;
                 }

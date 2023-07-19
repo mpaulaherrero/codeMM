@@ -78,7 +78,7 @@ export class MMBoard extends LitElement {
 
             .tokenY-coin {
                 border-radius: 50%;
-                background: #DBB414;
+                background: #ffd200;
             }
 
             .tokenG-coin {
@@ -177,6 +177,7 @@ export class MMBoard extends LitElement {
         this.setBoard();
         this.setSecretCombination();
         this.getProposedCombination();
+        this.combinationComponent = this.shadowRoot.querySelector('mm-combination');
     }
 
     render() {
@@ -262,6 +263,7 @@ export class MMBoard extends LitElement {
         this.setBoard();
         this.setSecretCombination();
         this.getProposedCombination();
+        this.combinationComponent.show();
     }
 
     setSecretCombination(){
@@ -273,25 +275,29 @@ export class MMBoard extends LitElement {
         console.log(`The random secret combination is ${this.board.getSecretCombination().getValue()}`);
     }
 
-    // visitUserSecretCombination(){
-    //     new CombinationView(this.#console,this.board.getSecretCombination(),`Propose a secret combination`).readValue();
-    //     console.log(`The user secret combination is ${this.board.getSecretCombination().getValue()}`);
-    // }
+    visitUserSecretCombination(){
+        this.board.getSecretCombination().setValue("cmrg");
+        //new CombinationView(this.#console,this.board.getSecretCombination(),`Propose a secret combination`).readValue();
+        console.log(`The user secret combination is ${this.board.getSecretCombination().getValue()}`);
+    }
 
     getProposedCombination(){
         this.board.newLastProposedCombination();
         this.board.getLastProposedCombination().accept(this);
     }
 
-    // visitRandomProposedCombination(){
-    //     this.board.getLastProposedCombination().setCombination();
-    // }
+    visitRandomProposedCombination(){
+        console.log("visitRandomProposedCombination");
+        this.board.getLastProposedCombination().setCombination();
+        setTimeout(function() {
+            this.setBoard();
+            this.#dispatchCustomEvent('mm-game-check-end');
+        }.bind(this), 300);
+    }
 
     visitUserProposedCombination(){
-        console.log("visitUserProposedCombination");
         this.currentCombinationIndexColor=0;
         this.board.getLastProposedCombination().setValue(this.getEmptyCombination());
-        //new CombinationView(this.#console,this.board.getLastProposedCombination()).readValue();
     }
 
     getEmptyCombination(){
@@ -325,6 +331,7 @@ export class MMBoard extends LitElement {
     }
 
     displayWinnerLine(){
+        this.combinationComponent.hide();
         this.shadowRoot.getElementById(this.GAME_BOARD_ID).className = "finished";
         //inconsistencia con ultimo token puesto, se muestra pero no esta en el html el estilo
         setTimeout(function() {

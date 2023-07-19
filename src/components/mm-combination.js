@@ -22,22 +22,12 @@ export class MmCombination extends LitElement {
                 margin-bottom: 7px;
             }
 
-            #combination td {
+            .combination td {
                 position: relative;
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
                 vertical-align: top;
-            }
-
-            #coin {
-                position: absolute;
-                display: none;
-                left: 0px;
-                top: 0px;
-                width: 41px;
-                height: 41px;
-                border-radius: 50%;
             }
 
             .tokenR-coin {
@@ -47,7 +37,7 @@ export class MmCombination extends LitElement {
 
             .tokenY-coin {
                 border-radius: 50%;
-                background: #DBB414;
+                background: #ffd200;
             }
 
             .tokenG-coin {
@@ -70,32 +60,41 @@ export class MmCombination extends LitElement {
                 background: #db8214;
             }
 
+            .hidden {
+                display: none;
+            }
+
         `
     ];
 
+    static properties = {
+        hidden: { type: Boolean, reflect: true, },
+    }
+
     constructor(){
         super();
-        this.options = Color.colorsCodeToString().split("");
+        this.#options = Color.colorsCodeToString().split("");
+        this.hidden = false;
     }
 
     render() {
-        return html`<table  id="combination">
+        return html`<table class="combination" style="display:${this.hidden?"none":"inherent"}">
             <tbody  @click=${this.doClickCell}>
                 <tr>
-                    ${this.options.map( token => html`
+                    ${this.#options.map( token => html`
                             <td class="coin token${token.toUpperCase()}-coin"></td>
                     `)}
                 </tr>
             </tbody>
         </table>
-        <button @click=${this.doAccept}>Aceptar Combinación</button>
-        <button @click=${this.doDelete}>Borrar Último</button>`;
+        <button style="display:${this.hidden?"none":"inherent"}" @click=${this.doAccept}>Aceptar Combinación</button>
+        <button style="display:${this.hidden?"none":"inherent"}" @click=${this.doDelete}>Borrar Último</button>`;
     }
 
     doClickCell(e){
         this.dispatchEvent(new CustomEvent('mm-board-set-color', {
             bubbles: true, composed: true,
-            detail: { color: this.options[e.target.cellIndex] }
+            detail: { color: this.#options[e.target.cellIndex] }
         }));
     }
 
@@ -109,6 +108,14 @@ export class MmCombination extends LitElement {
         this.dispatchEvent(new CustomEvent('mm-board-delete-last-color', {
             bubbles: true, composed: true
         }));
+    }
+
+    show() {
+        this.hidden = false;
+    }
+
+    hide() {
+        this.hidden = true;
     }
 }
 

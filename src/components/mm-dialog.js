@@ -2,12 +2,12 @@ import { LitElement, html, css } from 'lit';
 
 export class MMDialog extends LitElement {
     WELCOME_TEXT = 'Si quieres jugar contra la máquina seleciona 4 colores diferentes, si no, cambia la opción y empieza otro juego';
-    SELECT_COLORS_TEXT = `Selecciona cuatro colores diferentes`;
+    SELECT_COLORS_TEXT = `Selecciona 4 colores diferentes`;
     COLOR_REPEATED = `El color esta repetido, escoja otro`;
     FOUR_COLOR = 'No puede escoger más, son sólo 4 colores, acepte la combinación si ya terminó';
     NO_COLOR = 'No hay color para borrar, intente seleccionar un color';
     MISSING_COLORS = 'Faltan colores, tiene que escoger 4';
-    NEW_COMBINATION = 'La combinación no es correcta, intanta de nueva';
+    NEW_COMBINATION = 'La combinación no es correcta, intenta de nuevo';
     YOU_WON = '¡¡ GANASTE !!';
     YOU_LOST = 'Perdiste, lo siento, llegaste al máximo de intentos permitidos';
 
