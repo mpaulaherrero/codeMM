@@ -57,18 +57,9 @@ export class Board {
     }
 
     checkBlacksAndWhites(){
-        const result = new Result();
-        for (let i = 0; i < this.#secretCombination.getLength(); i++) {
-            if (this.#secretCombination.getValue()[i] === this.getLastProposedCombination().getValue()[i]) {
-                result.addBlacks();
-            } else {
-                if (this.#secretCombination.hasColor(this.getLastProposedCombination().getValue()[i])) {
-                    result.addWhites();
-                }
-            }
-        }
-        result.setWinner(this.#secretCombination.getLength());
-        this.#results[this.#results.length] = result;
+        this.#results[this.#results.length] = Result.checkBlacksAndWhites(
+            this.#secretCombination.getValue(),
+            this.getLastProposedCombination().getValue());
     }
 
     isLastProposedCombinationAWinner(){

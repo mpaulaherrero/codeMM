@@ -43,15 +43,6 @@ export class Combination {
         return uniqueColor;
     }
 
-    hasColor(color){
-        for (let i = 0; i < this.#value.length; i++) {
-            if (this.#value[i] === color) {
-              return true;
-            }
-        }
-        return false;
-    }
-
     getRandomColor(){
         return Color.getRandomColor().getCode();
     }
