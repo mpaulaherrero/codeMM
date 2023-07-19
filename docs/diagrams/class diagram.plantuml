@@ -1,0 +1,249 @@
+@startuml connect4_classNotation_classdiagram
+
+package "console-mpds" <<Rectangle>> #ccc {
+    class console {
+        writeln(text)
+        readString(question)
+        readNumber(question)
+    }
+}
+
+package "Types" <<Rectangle>> #aca {
+    class Color {
+        {static} RED
+        {static} GREEN
+        {static} YELLOW
+        {static} BLUE
+        {static} MAGENTA
+        {static} CHESTNUT
+        {static} NULL
+        -string;
+        constructor(string) 
+        {static} values()
+        {static} get(ordinal)
+        {static} getRandomColor()
+        {static} validateColorCode(colorCode)
+        {static} colorsCodeToString()
+        getCode()
+    }
+}
+
+package "Models" <<Rectangle>> #aca {
+
+    class Board {
+        MAX_ATTEMPTS
+        -secretCombination
+        -proposedCombination
+        -proposedCombinations
+        -results
+        constructor(numOfPlayers)
+        getSecretCombination()
+        newLastProposedCombination()
+        getLastProposedCombination()
+        getProposedCombination(position)
+        getProposedCombinationsLength()
+        getResult(position)
+        checkBlacksAndWhites()
+        isLastProposedCombinationAWinner()
+        isComplete()
+    }
+
+    class Combination {
+        COMBINATION_LENGTH
+        -value
+        constructor()
+        getLength()
+        setValue(value)
+        getValue()
+        validateLength()
+        validateColors()
+        validateUniqueColors()
+        hasColor(color)
+        getRandomColor()
+    }
+
+    class Game {
+        {static} STATES
+        -board
+        -state
+        constructor(numPlayers)
+        getBoard()
+        checkEnd()
+        getState()
+        checkBlacksAndWhites()
+    }
+
+    class RandomCombination extends Combination{
+        constructor()
+        accept(visitor)
+        setCombination()
+    }
+
+    class RandomProposedCombination extends RandomCombination{
+        constructor()
+        accept(visitor)
+        clone()
+    }
+
+    class RandomSecretCombination extends RandomCombination{
+        constructor()
+        accept(visitor)
+    }
+
+    class UserCombination extends Combination{
+        constructor()
+        accept(visitor)
+    }
+
+    class UserProposedCombination extends UserCombination{
+        constructor()
+        accept(visitor)
+        clone()
+    }
+
+    class UserSecretCombination extends UserCombination{
+        constructor()
+        accept(visitor)
+    }
+
+    class Result {
+        -blacks
+        -whites
+        -isWinner
+        constructor()
+        addWhites()
+        addBlacks()
+        getBlacks()
+        getWhites()
+        setWinner(combinationLength)
+        isWinner()
+    }
+}
+
+package "Views" <<Rectangle>> #caa {
+    class BoardView{
+        -board
+        -console
+        constructor(board,console)
+        setSecretCombination()
+        visitRandomSecretCombination()
+        visitUserSecretCombination()
+        getProposedCombination()
+        visitRandomProposedCombination()
+        visitUserProposedCombination()
+        writeAttempts()
+        -writeLine(position)
+    }
+
+    class CombinationView {
+        -message
+        -combination
+        -console
+        constructor(console, combination, message)
+        readValue()
+        checkErrors()
+    }
+
+    class ConsoleView {
+        -console
+        writeln(text)
+        readString(question)
+        readNumber(question)
+    }
+
+    class GameView {
+        -game
+        -boardView
+        -console
+        constructor(numPlayers, console)
+        writeFinish()
+        play()
+    }
+
+    class MastermindView {
+        -continueDialog
+        -numPlayersMenu
+        -console
+        constructor(console)
+        play()
+    }
+
+    class NumPlayersMenu extends Menu {
+        constructor(console)
+        read()
+    }
+
+    class YesNoDialog {
+        -question
+        -answer
+        -console
+        constructor(question, console)
+        read()
+        isAffirmative()
+        isNegative()
+    }
+
+    class Option {
+        -title
+        -value
+        constructor(title, value) 
+        getValue()
+        getTitle()
+    }
+
+    class Menu {
+        -console
+        -title
+        -options
+        -answer
+        constructor(title, console)
+        add(option)
+        interact()
+        show()
+        -showTitle()
+        execChoosedOption()
+        -readInt(prompt)
+        getChoosedOptionValue()
+    }
+}
+
+Board *-down-> RandomSecretCombination
+Board *-down-> RandomProposedCombination
+Board *-down-> UserSecretCombination
+Board *-down-> UserProposedCombination
+Board *-right-> Result
+Board -down[hidden]-> Combination
+
+Combination -d-> Color
+
+Game *-down-> Board
+
+BoardView -> Board
+BoardView *-down-> CombinationView
+
+CombinationView -> Combination
+CombinationView -d-> Color
+
+GameView *-> Game
+GameView *-down-> BoardView
+
+MastermindView -> YesNoDialog
+MastermindView -> NumPlayersMenu
+MastermindView *-down-> GameView
+MastermindView -left[hidden]-> Menu
+
+Menu --> Option
+NumPlayersMenu *-> Option
+
+MastermindView .-down-> ConsoleView
+GameView .-down-> ConsoleView
+BoardView .-down-> ConsoleView
+CombinationView .-down-> ConsoleView
+YesNoDialog .-down-> ConsoleView
+Menu .-down-> ConsoleView
+
+ConsoleView -down-> console
+
+app *-down-> MastermindView
+
+@enduml

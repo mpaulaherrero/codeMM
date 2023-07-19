@@ -1,0 +1,23 @@
+{
+  "name": "mastermind",
+  "version": "1.0.0",
+  "description": "Juego Mastermind hecho con webcomponents",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "María Paula Herrero",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^4.4.4"
+  },
+  "dependencies": {
+    "lit": "^2.7.6"
+  }
+}
