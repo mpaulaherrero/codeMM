@@ -99,7 +99,6 @@ export class MMMain extends LitElement {
     }
 
     setPlayers(e){
-        console.log(e.detail.numPlayers)
         this.newGame(e.detail.numPlayers);
         this.shadowRoot.querySelector('mm-game').set(this.#game);
         document.dispatchEvent(new CustomEvent('mm-dialog-write-select-color', {
