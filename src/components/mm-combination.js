@@ -68,18 +68,20 @@ export class MmCombination extends LitElement {
     ];
 
     static properties = {
-        hidden: { type: Boolean, reflect: true, },
+        isHidden: { type: Boolean, reflect: true, },
+        isActive: { type: Boolean, reflect: true, },
     }
 
     constructor(){
         super();
         this.#options = Color.colorsCodeToString().split("");
-        this.hidden = false;
+        this.isHidden = false;
+        this.isActive = true;
     }
 
     render() {
-        return html`<table class="combination" style="display:${this.hidden?"none":"inherent"}">
-            <tbody  @click=${this.doClickCell}>
+        return html`<table class="combination" style="display:${this.isHidden?"none":"inherent"}">
+            <tbody  @click=${this.isActive ? this.doClickCell : null}>
                 <tr>
                     ${this.#options.map( token => html`
                             <td class="coin token${token.toUpperCase()}-coin"></td>
@@ -87,8 +89,8 @@ export class MmCombination extends LitElement {
                 </tr>
             </tbody>
         </table>
-        <button style="display:${this.hidden?"none":"inherent"}" @click=${this.doAccept}>Aceptar Combinación</button>
-        <button style="display:${this.hidden?"none":"inherent"}" @click=${this.doDelete}>Borrar Último</button>`;
+        <button style="display:${this.isHidden?"none":"inherent"}" @click=${this.isActive ? this.doAccept : null}>Aceptar Combinación</button>
+        <button style="display:${this.isHidden?"none":"inherent"}" @click=${this.isActive ? this.doDelete : null}>Borrar Último</button>`;
     }
 
     doClickCell(e){
@@ -111,11 +113,19 @@ export class MmCombination extends LitElement {
     }
 
     show() {
-        this.hidden = false;
+        this.isHidden = false;
     }
 
     hide() {
-        this.hidden = true;
+        this.isHidden = true;
+    }
+
+    active(){
+        this.isActive = true;
+    }
+
+    inactive(){
+        this.isActive = false;
     }
 }
 

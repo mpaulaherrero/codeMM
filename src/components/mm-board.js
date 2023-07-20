@@ -260,6 +260,7 @@ export class MMBoard extends LitElement {
         this.setSecretCombination();
         this.getProposedCombination();
         this.combinationComponent.show();
+        this.combinationComponent.active();
     }
 
     setSecretCombination(){
@@ -293,6 +294,7 @@ export class MMBoard extends LitElement {
     visitMinimaxSecretCombination(){
         this.board.getLastProposedCombination().setCombination();
         this.board.getLastProposedCombination().setResult(this.board.getBlacksAndWhites());
+        this.combinationComponent.inactive();
         setTimeout(function() {
             this.setBoard();
             this.#dispatchCustomEvent('mm-game-check-end');
