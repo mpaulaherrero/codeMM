@@ -9,7 +9,7 @@ export class MMDialog extends LitElement {
     MISSING_COLORS = 'Faltan colores, tiene que escoger 4';
     NEW_COMBINATION = 'La combinación no es correcta, intenta de nuevo';
     YOU_WON = '¡¡ GANASTE !!';
-    YOU_LOST = 'Perdiste, lo siento, llegaste al máximo de intentos permitidos';
+    YOU_LOST = 'PERDISTE, lo sentimos, llegaste al máximo de intentos permitidos';
 
     static styles = [
         css`
