@@ -283,15 +283,7 @@ export class MMBoard extends LitElement {
         this.board.getLastProposedCombination().accept(this);
     }
 
-    visitRandomProposedCombination(){
-        this.board.getLastProposedCombination().setCombination();
-        setTimeout(function() {
-            this.setBoard();
-            this.#dispatchCustomEvent('mm-game-check-end');
-        }.bind(this), 300);
-    }
-
-    visitMinimaxSecretCombination(){
+    visitMinimaxProposedCombination(){
         this.board.getLastProposedCombination().setCombination();
         this.board.getLastProposedCombination().setResult(this.board.getBlacksAndWhites());
         this.combinationComponent.inactive();

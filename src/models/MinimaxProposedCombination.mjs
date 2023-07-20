@@ -14,7 +14,7 @@ export class MinimaxProposedCombination extends Combination {
     }
 
     accept(visitor){
-        visitor.visitMinimaxSecretCombination();
+        visitor.visitMinimaxProposedCombination();
     }
 
     setCombination(){
