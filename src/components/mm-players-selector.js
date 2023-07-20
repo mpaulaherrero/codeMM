@@ -33,9 +33,8 @@ export class MMPlayersSelector extends LitElement {
 
     render() {
         return html`<p><select id="num_players" autocomplete="off" >
-            <option value="0" ?selected=${this.numPlayers===0}>Máquina VS Máquina</option>
+            <option value="0" ?selected=${this.numPlayers===0}>Máquina VS IA</option>
             <option value="1" ?selected=${this.numPlayers===1}>Máquina VS Jugador</option>
-            <option value="2" ?selected=${this.numPlayers===2}>Jugador VS Jugador</option>
             </select>
             <button @click=${this.setNumPlayers}>Empezar Juego</button></p>`;
     }
