@@ -1,5 +1,5 @@
 import { RandomSecretCombination } from './RandomSecretCombination.mjs'
-import { RandomProposedCombination } from './RandomProposedCombination.mjs'
+import { MinimaxProposedCombination } from './MinimaxProposedCombination.mjs'
 import { UserSecretCombination } from './UserSecretCombination.mjs'
 import { UserProposedCombination } from './UserProposedCombination.mjs'
 import { Result } from './Result.mjs'
@@ -20,7 +20,7 @@ export class Board {
         switch(numOfPlayers){
             case 0:
                 this.#secretCombination = new RandomSecretCombination();
-                this.#proposedCombination = new RandomProposedCombination();
+                this.#proposedCombination = new MinimaxProposedCombination();
                 break;
             case 1:
                 this.#secretCombination = new RandomSecretCombination();
@@ -56,8 +56,12 @@ export class Board {
         return this.#results[position];
     }
 
-    checkBlacksAndWhites(){
-        this.#results[this.#results.length] = Result.checkBlacksAndWhites(
+    setResult(){
+        this.#results[this.#results.length] = this.getBlacksAndWhites();
+    }
+
+    getBlacksAndWhites(){
+        return Result.checkBlacksAndWhites(
             this.#secretCombination.getValue(),
             this.getLastProposedCombination().getValue());
     }

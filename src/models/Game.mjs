@@ -31,7 +31,7 @@ export class Game {
         return this.#state;
     }
 
-    checkBlacksAndWhites(){
-        this.getBoard().checkBlacksAndWhites();
+    setResult(){
+        this.getBoard().setResult();
     }
 }

@@ -33,7 +33,7 @@ export class Result {
         return this.#isWinner;
     }
 
-    equal(result){
+    equals(result){
         let equal = false;
         if(this.#blacks==result.#blacks && this.#whites==result.#whites){
             equal = true;

@@ -70,7 +70,7 @@ export class MMMainGame extends LitElement {
     }
 
     checkEnd(){
-        this.game.checkBlacksAndWhites();
+        this.game.setResult();
         if(this.game.checkEnd()){
             this.#writeFinish();
         } else {

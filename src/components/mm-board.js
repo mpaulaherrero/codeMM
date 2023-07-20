@@ -286,12 +286,20 @@ export class MMBoard extends LitElement {
     }
 
     visitRandomProposedCombination(){
-        console.log("visitRandomProposedCombination");
         this.board.getLastProposedCombination().setCombination();
         setTimeout(function() {
             this.setBoard();
             this.#dispatchCustomEvent('mm-game-check-end');
         }.bind(this), 300);
+    }
+
+    visitMinimaxSecretCombination(){
+        this.board.getLastProposedCombination().setCombination();
+        this.board.getLastProposedCombination().setResult(this.board.getBlacksAndWhites());
+        setTimeout(function() {
+            this.setBoard();
+            this.#dispatchCustomEvent('mm-game-check-end');
+        }.bind(this), 500);
     }
 
     visitUserProposedCombination(){

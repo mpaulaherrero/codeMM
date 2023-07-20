@@ -1,7 +1,7 @@
 import { Color } from '../types/Color.mjs'
 
 export class Combination {
-    COMBINATION_LENGTH = 4;
+    static COMBINATION_LENGTH = 4;
 
     #value
 
@@ -10,7 +10,7 @@ export class Combination {
     }
 
     getLength(){
-        return this.COMBINATION_LENGTH;
+        return Combination.COMBINATION_LENGTH;
     }
 
     setValue(value){
@@ -22,7 +22,7 @@ export class Combination {
     }
 
     validateLength(){
-        return this.COMBINATION_LENGTH !== this.#value.length;
+        return Combination.COMBINATION_LENGTH !== this.#value.length;
     }
 
     validateColors() {
