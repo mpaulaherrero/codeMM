@@ -40,9 +40,6 @@ export class MMDialog extends LitElement {
         window.addEventListener('mm-dialog-four-color', () => this.write(this.FOUR_COLOR));
         window.addEventListener('mm-dialog-no-color', () => this.write(this.NO_COLOR));
         window.addEventListener('mm-dialog-missing-colors', () => this.write(this.MISSING_COLORS));
-        window.addEventListener('mm-dialog-new-combination', () => this.write(this.NEW_COMBINATION));
-        window.addEventListener('mm-dialog-you-won', () => this.write(this.YOU_WON));
-        window.addEventListener('mm-dialog-you-lost', () => this.write(this.YOU_LOST));
     }
 
     render() {
@@ -62,5 +59,18 @@ export class MMDialog extends LitElement {
             this.write(text);
         }
     }
+
+    writeYouWon(){
+        this.write(this.YOU_WON);
+    }
+
+    writeYouLost(){
+        this.write(this.YOU_LOST)
+    }
+
+    writeNewCombination(){
+        this.write(this.NEW_COMBINATION);
+    }
+
 }
 customElements.define('mm-dialog', MMDialog);

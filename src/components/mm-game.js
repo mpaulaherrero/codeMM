@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 
-export class MMMainGame extends LitElement {
+export class MMGame extends LitElement {
     static styles = [
         css`
             :host {
@@ -77,27 +77,20 @@ export class MMMainGame extends LitElement {
         if(this.game.checkEnd()){
             this.#writeFinish();
         } else {
-            this.#dispatchCustomEvent('mm-dialog-new-combination');
+            this.dialogComponent.writeNewCombination()
             this.boardComponent.getProposedCombination();
         }
     }
 
     #writeFinish(){
         if(this.game.getBoard().isLastProposedCombinationAWinner()){
-            this.#dispatchCustomEvent('mm-dialog-you-won');
+            this.dialogComponent.writeYouWon();
             this.boardComponent.displayWinnerLine();
         } else{
             if(this.game.getBoard().isComplete()){
-                this.#dispatchCustomEvent('mm-dialog-you-lost');
+                this.dialogComponent.writeYouLost();
             }
         }
     }
-
-    #dispatchCustomEvent(name){
-        this.dispatchEvent(new CustomEvent(name, {
-            bubbles: true, composed: true
-        }));
-    }
-
 }
-customElements.define('mm-game', MMMainGame);
+customElements.define('mm-game', MMGame);

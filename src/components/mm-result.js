@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 
-export class MmResult extends LitElement {
+export class MMResult extends LitElement {
     #results;
 
     static styles = [
@@ -46,30 +46,30 @@ export class MmResult extends LitElement {
 
     constructor(){
         super();
-        this.results = [];
+        this.#results = [];
     }
 
     render() {
         this.setResult();
         return html`<div class="parent">
-                ${this.results.map( token => html`<div class="child ${token}"></div>`)}
+                ${this.#results.map( token => html`<div class="child ${token}"></div>`)}
         </div>`;
     }
 
     setResult(){
-        this.results = [];
+        this.#results = [];
         let total = 0;
         let blacks = (this.result)?this.result.getBlacks():0;
         let whites = (this.result)?this.result.getWhites():0;
         for(total; total < blacks; total++){
-            this.results[total] = "tokenB-coin";
+            this.#results[total] = "tokenB-coin";
         }
         for(total; total < blacks + whites; total++){
-            this.results[total] = "tokenW-coin";
+            this.#results[total] = "tokenW-coin";
         }
         for(total; total < 4; total++){
-            this.results[total] = "";
+            this.#results[total] = "";
         }
     }
 }
-customElements.define('mm-result', MmResult);
+customElements.define('mm-result', MMResult);

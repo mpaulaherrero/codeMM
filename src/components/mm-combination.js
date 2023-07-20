@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { Color } from '../types/Color.mjs'
 
-export class MmCombination extends LitElement {
+export class MMCombination extends LitElement {
 
     #options
 
@@ -129,4 +129,4 @@ export class MmCombination extends LitElement {
     }
 }
 
-customElements.define('mm-combination', MmCombination);
+customElements.define('mm-combination', MMCombination);
