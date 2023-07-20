@@ -48,6 +48,9 @@ export class MMMainGame extends LitElement {
 
     firstUpdated(){
         this.boardComponent = this.shadowRoot.querySelector('mm-board');
+        this.boardComponent.setBoard();
+        this.boardComponent.setSecretCombination();
+        this.boardComponent.getProposedCombination();
         this.dialogComponent = this.shadowRoot.querySelector('mm-dialog');
         this.dialogComponent.writeWelcome();
     }

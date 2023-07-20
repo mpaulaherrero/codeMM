@@ -174,9 +174,6 @@ export class MMBoard extends LitElement {
     }
 
     firstUpdated(){
-        this.setBoard();
-        this.setSecretCombination();
-        this.getProposedCombination();
         this.combinationComponent = this.shadowRoot.querySelector('mm-combination');
     }
 
