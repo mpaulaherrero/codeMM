@@ -269,7 +269,7 @@ export class MMBoard extends LitElement {
 
     visitRandomSecretCombination(){
         this.board.getSecretCombination().setCombination();
-        console.log(`The random secret combination is ${this.board.getSecretCombination().getValue()}`);
+        //console.log(`The random secret combination is ${this.board.getSecretCombination().getValue()}`);
     }
 
     visitUserSecretCombination(){
