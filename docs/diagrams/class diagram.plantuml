@@ -1,13 +1,5 @@
 @startuml connect4_classNotation_classdiagram
 
-package "console-mpds" <<Rectangle>> #ccc {
-    class console {
-        writeln(text)
-        readString(question)
-        readNumber(question)
-    }
-}
-
 package "Types" <<Rectangle>> #aca {
     class Color {
         {static} RED
@@ -43,13 +35,14 @@ package "Models" <<Rectangle>> #aca {
         getProposedCombination(position)
         getProposedCombinationsLength()
         getResult(position)
-        checkBlacksAndWhites()
+        setResult()
+        getBlacksAndWhites()
         isLastProposedCombinationAWinner()
         isComplete()
     }
 
     class Combination {
-        COMBINATION_LENGTH
+        {static} COMBINATION_LENGTH
         -value
         constructor()
         getLength()
@@ -58,7 +51,6 @@ package "Models" <<Rectangle>> #aca {
         validateLength()
         validateColors()
         validateUniqueColors()
-        hasColor(color)
         getRandomColor()
     }
 
@@ -70,19 +62,25 @@ package "Models" <<Rectangle>> #aca {
         getBoard()
         checkEnd()
         getState()
-        checkBlacksAndWhites()
+        setResult()
+    }
+
+    class MinimaxProposedCombination extends Combination {
+        -impossibleCombination
+        -possibleCombination
+        constructor()
+        accept(visitor)
+        setCombination()
+        -getInitialMinMaxTable()
+        setResult(result)
+        {static} getAllCombinations()
+        clone()
     }
 
     class RandomCombination extends Combination{
         constructor()
         accept(visitor)
         setCombination()
-    }
-
-    class RandomProposedCombination extends RandomCombination{
-        constructor()
-        accept(visitor)
-        clone()
     }
 
     class RandomSecretCombination extends RandomCombination{
@@ -117,98 +115,116 @@ package "Models" <<Rectangle>> #aca {
         getWhites()
         setWinner(combinationLength)
         isWinner()
+        equals(result)
+        {static} checkBlacksAndWhites(secretCombination, combination)
+        {static} hasColor(combination, color)
     }
 }
 
-package "Views" <<Rectangle>> #caa {
-    class BoardView{
-        -board
-        -console
-        constructor(board,console)
+package "Components" <<Rectangle>> #caa {
+    class MMBoard{
+        {static} GAME_BOARD_ID
+        currentCombinationIndexColor
+        {static} styles
+        {static} properties
+        constructor()
+        firstUpdated()
+        render()
+        setColor(e)
+        deleteLastColor()
+        acceptCombination()
+        setBoard()
+        set(board)
         setSecretCombination()
         visitRandomSecretCombination()
         visitUserSecretCombination()
         getProposedCombination()
-        visitRandomProposedCombination()
+        visitMinimaxProposedCombination()
         visitUserProposedCombination()
-        writeAttempts()
-        -writeLine(position)
+        getEmptyCombination()
+        -setCurrentCombinationValue(color)
+        -getCurrentCombinationValue(value, color)
+        -uniqueColor(color)
+        displayWinnerLine()
+        -dispatchCustomEvent(name)
     }
 
-    class CombinationView {
-        -message
-        -combination
-        -console
-        constructor(console, combination, message)
-        readValue()
-        checkErrors()
-    }
-
-    class ConsoleView {
-        -console
-        writeln(text)
-        readString(question)
-        readNumber(question)
-    }
-
-    class GameView {
-        -game
-        -boardView
-        -console
-        constructor(numPlayers, console)
-        writeFinish()
-        play()
-    }
-
-    class MastermindView {
-        -continueDialog
-        -numPlayersMenu
-        -console
-        constructor(console)
-        play()
-    }
-
-    class NumPlayersMenu extends Menu {
-        constructor(console)
-        read()
-    }
-
-    class YesNoDialog {
-        -question
-        -answer
-        -console
-        constructor(question, console)
-        read()
-        isAffirmative()
-        isNegative()
-    }
-
-    class Option {
-        -title
-        -value
-        constructor(title, value) 
-        getValue()
-        getTitle()
-    }
-
-    class Menu {
-        -console
-        -title
+    class MMCombination{
         -options
-        -answer
-        constructor(title, console)
-        add(option)
-        interact()
+        {static} styles
+        {static} properties
+        constructor()
+        render()
+        doClickCell(e)
+        doAccept()
+        doDelete()
         show()
-        -showTitle()
-        execChoosedOption()
-        -readInt(prompt)
-        getChoosedOptionValue()
+        hide()
+        active()
+        inactive()
+    }
+
+    class MMDialog {
+        WELCOME_TEXT
+        SELECT_COLORS_TEXT
+        COLOR_REPEATED
+        FOUR_COLOR
+        NO_COLOR
+        MISSING_COLORS
+        NEW_COMBINATION
+        YOU_WON
+        YOU_LOST
+        {static} styles
+        {static} properties
+        constructor()
+        render()
+        writeWelcome()
+        write(text)
+        writeIfNotWelcome(text)
+        writeYouWon()
+        writeYouLost()
+        writeNewCombination()
+    }
+
+    class MMGame {
+        {static} styles
+        {static} properties
+        firstUpdated()
+        render()
+        set(game)
+        checkEnd()
+        -writeFinish()
+    }
+
+    class MMMain {
+        -game
+        DEFAULT_PLAYERS
+        {static} styles
+        constructor()
+        render()
+        setPlayers(e)
+        newGame(numPlayers)
+    }
+
+    class MMPlayersSelector {
+        {static} styles
+        {static} properties
+        render()
+        setNumPlayers()
+    }
+
+    class MMResult {
+        -results
+        {static} styles
+        {static} properties
+        constructor()
+        render()
+        setResult()
     }
 }
 
 Board *-down-> RandomSecretCombination
-Board *-down-> RandomProposedCombination
+Board *-down-> MinimaxProposedCombination
 Board *-down-> UserSecretCombination
 Board *-down-> UserProposedCombination
 Board *-right-> Result
@@ -216,34 +232,29 @@ Board -down[hidden]-> Combination
 
 Combination -d-> Color
 
+MinimaxProposedCombination -> Color
+MinimaxProposedCombination -> Result
+
 Game *-down-> Board
 
-BoardView -> Board
-BoardView *-down-> CombinationView
+MMBoard -> Board
+MMBoard -> Color
 
-CombinationView -> Combination
-CombinationView -d-> Color
+MMBoard *-down-> MMResult
+MMBoard *-down-> MMCombination
 
-GameView *-> Game
-GameView *-down-> BoardView
+MMResult -> Result
 
-MastermindView -> YesNoDialog
-MastermindView -> NumPlayersMenu
-MastermindView *-down-> GameView
-MastermindView -left[hidden]-> Menu
+MMCombination -d-> Color
 
-Menu --> Option
-NumPlayersMenu *-> Option
+MMGame -> Game
+MMGame *-down-> MMBoard
+MMGame *-down-> MMDialog
 
-MastermindView .-down-> ConsoleView
-GameView .-down-> ConsoleView
-BoardView .-down-> ConsoleView
-CombinationView .-down-> ConsoleView
-YesNoDialog .-down-> ConsoleView
-Menu .-down-> ConsoleView
+MMMain *-> Game
+MMMain -d-> MMGame
+MMMain -> MMPlayersSelector
 
-ConsoleView -down-> console
-
-app *-down-> MastermindView
+indexHtml *-down-> MMMain
 
 @enduml
