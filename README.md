@@ -9,7 +9,9 @@ Juego de Mistermind hecho con webcomponets como ejercicio del master "Programaci
 
 ## Información General
 
-Desarrollado con web components y usando los modelos que se crearon para otras versiones del código (classNotation con DinamicHTML).
+Desarrollado con web components y usando los modelos que se crearon para otras versiones del código:
+
+- classNotation con DinamicHTML: https://github.com/mpaulaherrero/escuelaIT/tree/main/game-connect4/src/objectOriented/classNotation/viewsWeb/
 
 Se puede jugar de dos formas:
 + Maquina vs IA: un jugador máquina que crea el código de manera random contra un jugador máquina que juega con IA (Minimax)
@@ -17,6 +19,10 @@ Se puede jugar de dos formas:
 
 Diagrama de clases UML usado:
 ![Diagrama de Clases UML](docs/diagrams/class%20diagram/connect4_classNotation_classdiagram.png)
+
+
+Diagrama de clase UML del DinamicHTML:
+![Diagrama de Clases UML](https://github.com/mpaulaherrero/escuelaIT/blob/main/game-connect4/docs/diagrams/objectOriented/classNotation/class%20diagram%20web/connect4_classNotation_viewsWeb_classdiagram.png)
 
 ## Tecnologías
 
